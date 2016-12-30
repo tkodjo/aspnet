@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - My MVC Bank</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -17,7 +17,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("MVC Bank", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -29,13 +29,74 @@
             </div>
         </div>
     </div>
+
+
     <div class="container body-content">
+        <div class="row col-md-12">
+            <img src="~/Content/17.jpg" class="img-responsive center-block" width="50%" />
+        </div>
+
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+          
+          
+            
+            <p>&copy; @DateTime.Now.Year - My MVC Bank - @Html.Action("Serial","Home",new { lettercase="upper"})</p>
+            <p>
+                @{
+                    if (Request.Browser.IsMobileDevice == true)
+                    {<p> You are using a mobile device</p> }
+                    else
+                    {
+                        <p> You are not using a mobile device</p>
+                    }
+
+                }
+            </p>
         </footer>
     </div>
+
+    @section scripts{
+        
+        <script>var toncul = 0;</script>
+        }
+
+    @{ var amounts = new List<int> { 10, 200, 30, 40, 400, 800, -10 };
+       }
+
+    <ul>
+
+        @{for (int i = 0; i < amounts.Count; i++)
+            {
+
+                <li>@formatAmount(amounts.ElementAt(i))</li>
+            }
+
+
+        }
+
+
+        @*@{ foreach (int amount in amounts)
+            {
+                <li>@formatAmount(amount)</li>
+            }
+
+
+        }*@
+    </ul>
+
+        @helper formatAmount(int amount)
+        {
+            if (amount > 100) {
+        <span style="background-color:green">@amount.ToString()</span>
+        }
+        else
+        {
+                <span style="background-color:red">@amount.ToString()</span>
+        }
+
+     }
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

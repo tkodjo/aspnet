@@ -15,3 +15,74 @@
     <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
     <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
 </address>
+
+<div id="FormSection">
+    <h3>@ViewBag.TheMessage</h3>
+    <form id="ContactForm" action="#">
+        <textarea name="message" id="message" data-bind="value:message,valueUpdate:'input'" maxlength="150"></textarea>
+        <input type="submit" value="send" />
+        <span data-bind="text:charactersRemaining"></span> characters remaining
+    </form>
+</div>
+
+
+@section scripts{
+
+<script src="~/Scripts/knockout-3.4.0.js"></script>
+    <script>
+        //knockout js 
+        function ContactViewModel() {
+            var self = this;
+
+            self.message = ko.observable("");
+            self.charactersRemaining = ko.computed(function () {
+                //alert(self.message().value);
+                var maxLength = $("#message").attr("maxlength");
+                return maxLength - self.message().length;
+            })
+        }
+        ko.applyBindings(ContactViewModel);
+
+    </script>
+
+    <script>
+
+        //$("#ContactForm").submit(function (e) {
+        //    var postData = $(this).serializeArray();
+        //    var formURL = "";//$(this).attr("action");
+        //    $.ajax(
+        //    {
+        //        url: formURL,
+        //        type: "POST",
+        //        data: postData,
+        //        success: function (data, textStatus, jqXHR) {
+        //            //data: return data from server
+        //            alert(data);
+        //            $("#ContactForm").html(jqXHR);
+
+        //        },
+        //        error: function (jqXHR, textStatus, errorThrown) {
+        //            //if fails     
+        //            $("#ContactForm").html(errorThrown);
+
+        //        }
+        //    });
+        //    e.preventDefault(); //STOP default action
+        //   // e.unbind(); //unbind. to stop multiple form submit.
+        //});
+
+        $("#ContactForm").submit(function (e) {
+
+            $.post("", { message: $("#message").val }).done(function (response) {
+                alert(response);
+
+                $("#FormSection").html(response);
+            });
+
+            e.preventDefault();
+            //e.preventDefault();
+        })
+
+    </script>
+    
+  }
