@@ -19,6 +19,7 @@ namespace AutomatedTellerMachine.Controllers
             var UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var AppUser = UserManager.FindById(userid);
 
+            //get app db context
             var db = new ApplicationDbContext();
             CheckingAccount ca = db.CheckingAccounts.First(cd => cd.ApplicationUserId == userid);
             var CheckingAccountId = ca.Id;
