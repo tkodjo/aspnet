@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using AutomatedTellerMachine.Migrations;
 
 namespace AutomatedTellerMachine.Models
 {
@@ -31,6 +32,12 @@ namespace AutomatedTellerMachine.Models
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Configuration>());
+            base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<CheckingAccount> CheckingAccounts {get; set;}
